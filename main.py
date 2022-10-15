@@ -1,6 +1,5 @@
 import pygame as py
 import sys
-import id
 import random
 
 # Initialize and set title bar
@@ -29,29 +28,60 @@ normal_font = py.font.SysFont("a", 20, True, False)
 title_font = py.font.Font.render(normal_font, "Would you rather is loading...", False, white)
 title_font_rect = title_font.get_rect()
 title_font_rect = title_font_rect.move(110, 20)
+option_1 = py.font.Font.render(normal_font, "", True, black)
+option_2 = py.font.Font.render(normal_font, "", True, black)
+option1_rect = option_1.get_rect()
+option2_rect = option_2.get_rect()
+
+# Get Text Loop for each ID
+def get_text(id, require):
+    if require == 1:
+        title_font_text = "Would you rather?"
+        return title_font_text
+    if id == 1:
+        if require == 2:
+            option1_text = "Be a human"
+            return option1_text
+        if require == 3:
+            option2_text = "Be a human"
+            return option2_text
 
 # Game Loop
 while True:
     clock.tick(60)
     game_timer = game_timer + 1
     screen.fill(black)
+
 # Draw Inital Rectangles
     py.draw.rect(screen, green, rect_rectangleleft)
     py.draw.rect(screen, blue, rect_rectangleright)
-    if game_timer == 10:
-        player_decision = False
+    if game_timer == 60:
+        player_decision = True
+        text_selected = False
+
 # Exit game
+
     for event in py.event.get():
         if event.type == py.QUIT:
             py.quit()
             sys.exit()
+
 # Gets text, if player decision and text is not chosen
+
     if not text_selected and player_decision:
-        id_selected = random.randint(1 , 2)
-        id.get_text(id_selected)
-        title_font_rect = title_font.get_rect
-        option1_rect = option1.get_rect
-        option2_rect = option2.get_rect
+        id_selected = random.randint(1 , 1)
+        title_font = py.font.Font.render(normal_font, get_text(id_selected, 1), True, white)
+        option_1 = py.font.Font.render(normal_font, get_text(id_selected, 2), True, black)
+        option_2 = py.font.Font.render(normal_font, get_text(id_selected, 3), True, black)
+        title_font_rect = title_font.get_rect()
+        title_font_rect = title_font_rect.move(150, 20)
+        option1_rect = option_1.get_rect()
+        option2_rect = option_2.get_rect()
+        option1_rect = option1_rect.move(70, 180)
+        option2_rect = option2_rect.move(270, 180)
+
 # Draw Text
     screen.blit(title_font, title_font_rect)
+    screen.blit(option_1, option1_rect)
+    screen.blit(option_2, option2_rect)
     py.display.update()
