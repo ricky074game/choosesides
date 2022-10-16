@@ -20,6 +20,8 @@ green = 0, 204, 0
 blue = 0, 0, 204
 black = 0, 0, 0
 white = 255, 255, 255
+cooldown_timer = 100 
+already_selected_option = False
 
 # Set inital sprites
 rect_rectangleleft = py.Rect(0, 50, 210, 310)
@@ -45,6 +47,10 @@ def get_text(id, require):
         if require == 3:
             option2_text = "Be a human"
             return option2_text
+def get_stats(id, option):
+    open("stats", "w")
+
+
 
 # Game Loop
 while True:
@@ -79,6 +85,18 @@ while True:
         option2_rect = option_2.get_rect()
         option1_rect = option1_rect.move(70, 180)
         option2_rect = option2_rect.move(270, 180)
+        text_selected = True
+        player_selected = False
+    
+# Start mouse controls
+    mouse_pos = py.mouse.get_pos()
+    button = py.mouse.get_pressed(3)
+
+# Get Mouse Button if Pressed
+    if button == (True, False, False) or button == (True, False, True):
+        if cooldown_timer <= game_timer:
+            if text_selected and not player_selected and not already_selected_option:
+                
 
 # Draw Text
     screen.blit(title_font, title_font_rect)
