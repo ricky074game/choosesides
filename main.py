@@ -96,7 +96,12 @@ while True:
     if button == (True, False, False) or button == (True, False, True):
         if cooldown_timer <= game_timer:
             if text_selected and not player_selected and not already_selected_option:
-                
+                cooldown_timer = game_timer + 30
+                if mouse_pos[0] <= 210 and mouse_pos[1] >= 50:
+                    print("Option 1")
+                else:
+                    if mouse_pos[0] >= 210 and mouse_pos[1] >= 50:
+                        print("Option 2")
 
 # Draw Text
     screen.blit(title_font, title_font_rect)
