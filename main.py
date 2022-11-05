@@ -17,7 +17,9 @@ game_settime = 0
 player_decision = True
 text_selected = True
 green = 0, 204, 0
+light_green = 20, 217, 72
 blue = 0, 0, 204
+light_blue = 20, 145, 217
 black = 0, 0, 0
 white = 255, 255, 255
 cooldown_timer = 100 
@@ -47,10 +49,33 @@ def get_text(id, require):
         if require == 3:
             option2_text = "Be a human"
             return option2_text
-def get_stats(id, option):
-    open("stats", "w")
+# Save are fun, including using files in order to get those stats
+def save(id, option):
+    file = open("stats", "r")
+    stats = file.readlines()
+    file.close()
+    file = open("stats", "w+")
+    stats[id] = stats[id].strip("\n")
+    num = stats[id].split("_")
+    if option == 0:
+        num[0] = int(num[0]) + 1
+    else:
+        num[1] = int(num[1]) + 1
+    for answer in range(1, 256):
+        if id == answer:
+            file.write(str(num[0]) + "_" + str(num[1]) + "\n")
+        else:
+            file.write(stats[id] + "\n")
 
-
+# Create file filled with info if found blank
+file = open("stats", "a+")
+test = file.readlines()
+file.close()
+if test == []:
+    file = open("stats", "w+")
+    for num in range(256):
+        file.write("0_0" + "\n")
+    file.close()
 
 # Game Loop
 while True:
@@ -98,10 +123,11 @@ while True:
             if text_selected and not player_selected and not already_selected_option:
                 cooldown_timer = game_timer + 30
                 if mouse_pos[0] <= 210 and mouse_pos[1] >= 50:
-                    print("Option 1")
+                    save(id_selected, 0)
+
                 else:
                     if mouse_pos[0] >= 210 and mouse_pos[1] >= 50:
-                        print("Option 2")
+                        save(id_selected, 1)
 
 # Draw Text
     screen.blit(title_font, title_font_rect)
