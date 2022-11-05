@@ -95,12 +95,28 @@ while True:
     screen.fill(black)
 
 # Animation Load Things
-if game_timer == animation_timer:
-    animation_load = True
-
+    if animation_start and game_timer == animation_timer:
+        animation_load = True
+    else:
+        if animation_start:
+            if color_go == 0 and color_animation == 0:
+                py.draw.rect(screen, light_green, rect_rectangleleft)
+                py.draw.rect(screen, blue, rect_rectangleright)
+            if color_go == 0 and color_animation == 1:
+                py.draw.rect(screen, green, rect_rectangleleft)
+                py.draw.rect(screen, blue, rect_rectangleright)
+            if color_go == 1 and color_animation == 0:
+                py.draw.rect(screen, green, rect_rectangleleft)
+                py.draw.rect(screen, light_blue, rect_rectangleright)
+            if color_go == 1 and color_animation == 1:
+                py.draw.rect(screen, green, rect_rectangleleft)
+                py.draw.rect(screen, light_blue, rect_rectangleright)
 # Draw Inital Rectangles
     if animation_start:
-        if bounce != 9:
+        if bounce == 19:
+            animation_start = False
+        print(bounce)
+        if bounce != 19:
             already_decided = False
             if color_go == 0 and color_animation == 1 and not already_decided and animation_load:
                 py.draw.rect(screen, light_green, rect_rectangleleft)
@@ -124,7 +140,7 @@ if game_timer == animation_timer:
                 color_animation = 0
                 bounce = bounce + 1
                 already_decided = True
-            if color_go == 1 and color_animation == 1 and not already_decided and animation_load:
+            if color_go == 1 and color_animation == 0 and not already_decided and animation_load:
                 py.draw.rect(screen, green, rect_rectangleleft)
                 py.draw.rect(screen, light_blue, rect_rectangleright)
                 color_animation = 30 + game_timer
